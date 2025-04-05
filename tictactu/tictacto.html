@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="tictacto.css">
+</head>
+<body>
+    <button class="settings-icon" id="settingsBtn">⚙️</button>
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+
+    <div class="container">
+        <header>
+            <h1>Tic-Tac-Toe</h1>
+        </header>
+
+        <div class="game-container">
+            <div class="status" id="status">Player X's turn</div>
+
+            <div class="scoreboard">
+                <div class="score">
+                    <h3 class="player-x">Player X</h3>
+                    <div class="score-value" id="scoreX">0</div>
+                </div>
+                <div class="score">
+                    <h3>Draw</h3>
+                    <div class="score-value" id="scoreDraw">0</div>
+                </div>
+                <div class="score">
+                    <h3 class="player-o">Player O</h3>
+                    <div class="score-value" id="scoreO">0</div>
+                </div>
+            </div>
+
+            <div class="board" id="board">
+                <div class="cell" data-cell-index="0"></div>
+                <div class="cell" data-cell-index="1"></div>
+                <div class="cell" data-cell-index="2"></div>
+                <div class="cell" data-cell-index="3"></div>
+                <div class="cell" data-cell-index="4"></div>
+                <div class="cell" data-cell-index="5"></div>
+                <div class="cell" data-cell-index="6"></div>
+                <div class="cell" data-cell-index="7"></div>
+                <div class="cell" data-cell-index="8"></div>
+            </div>
+
+            <div class="controls">
+                <button id="resetBtn" class="primary">Reset Game</button>
+                <button id="newGameBtn" class="secondary">New Game</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="winner-modal" id="winnerModal">
+        <div class="modal-content">
+            <div class="winner-icon" id="winnerIcon"></div>
+            <h2>Game Over</h2>
+            <p class="winner-text" id="winnerText">Player X wins!</p>
+            <button id="playAgainBtn" class="primary">Play Again</button>
+        </div>
+    </div>
+
+    <div class="settings-panel" id="settingsPanel">
+        <button class="close-settings" id="closeSettings">✕</button>
+        <div class="settings-header">
+            <h2>Game Settings</h2>
+        </div>
+        <div class="settings-option">
+            <h3>Sound Effects</h3>
+            <div class="sound-toggle">
+                <input type="checkbox" id="soundToggle" checked>
+                <label for="soundToggle">Enable Sounds</label>
+            </div>
+        </div>
+        <div class="settings-option">
+            <h3>Difficulty</h3>
+            <div class="difficulty-toggle">
+                <input type="radio" id="diffEasy" name="difficulty" value="easy" checked>
+                <label for="diffEasy">Easy</label>
+            </div>
+            <div class="difficulty-toggle">
+                <input type="radio" id="diffMedium" name="difficulty" value="medium">
+                <label for="diffMedium">Medium</label>
+            </div>
+            <div class="difficulty-toggle">
+                <input type="radio" id="diffHard" name="difficulty" value="hard">
+                <label for="diffHard">Hard</label>
+            </div>
+        </div>
+        <div class="settings-option">
+            <h3>Color Theme</h3>
+            <div class="color-themes">
+                <div class="color-option purple-blue" data-theme="purple-blue"></div>
+                <div class="color-option green-yellow" data-theme="green-yellow"></div>
+                <div class="color-option red-pink" data-theme="red-pink"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <script src="tictacto.js"></script>
+</body>
+</html>
