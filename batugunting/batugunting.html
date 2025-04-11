@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batu Kertas Gunting</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Batu Kertas Gunting</h1>
+        
+        <div class="score-board">
+            <div class="score-labels">
+                <div id="user-label" class="badge">Pemain</div>
+                <div id="computer-label" class="badge">Komputer</div>
+            </div>
+            <div class="score">
+                <span id="user-score">0</span>
+                <span class="score-separator">:</span>
+                <span id="computer-score">0</span>
+            </div>
+        </div>
+        
+        <div class="result">
+            <p>Pilih langkah kamu!</p>
+        </div>
+        
+        <div class="choices">
+            <button class="choice" id="rock" title="Batu">🪨</button>
+            <button class="choice" id="paper" title="Kertas">📜</button>
+            <button class="choice" id="scissors" title="Gunting">✂️</button>
+        </div>
+        
+        <div class="choices-history">
+            <div class="history-column">
+                <div class="history-title">Kamu</div>
+                <div class="player-choice" id="player-choice"></div>
+            </div>
+            <div class="history-column">
+                <div class="history-title">Komputer</div>
+                <div class="computer-choice" id="computer-choice"></div>
+            </div>
+        </div>
+        
+        <div class="action-message">
+            Buatlah pilihanmu!
+        </div>
+    </div>
+  
+    <script src="script.js"></script>
+</body>
+</html>
