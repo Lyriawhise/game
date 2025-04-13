@@ -1,0 +1,380 @@
+:root {
+    --glow-color: #A020F0;
+    --card-back-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --card-border: #3a3a3a;
+    --glow-spread: 3px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Pirata One', cursive;
+    background-color: #0a0a0a;
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%230a0a0a"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%23222222" stroke-width="0.5" stroke-opacity="0.1"/></svg>');
+}
+
+.game-container {
+    position: relative;
+    width: 90%;
+    max-width: 900px;
+    margin: 20px auto;
+    perspective: 1000px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><rect width="400" height="400" fill="%23120b0b"/><path d="M0 0 L400 400 M400 0 L0 400" stroke="%23221a1a" stroke-width="1" /></svg>');
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(160, 32, 240, 0.2), 
+                 inset 0 0 20px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.fog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(20, 10, 30, 0.3);
+    z-index: -1;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+}
+
+.game-title {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 3rem;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #d0d0d0;
+    text-shadow: 0 0 10px rgba(160, 32, 240, 0.7);
+    letter-spacing: 2px;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 12px;
+    width: 100%;
+    margin: 20px auto;
+}
+
+.game-board.mode-normal {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.game-board.mode-hard {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.card {
+    position: relative;
+    height: 0;
+    padding-bottom: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    background-size: cover;
+    background-position: center;
+}
+
+.card-back {
+    background: var(--card-back-color);
+    border: 2px solid var(--card-border);
+    transform: rotateY(0deg);
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a1a1a"/><circle cx="50" cy="50" r="30" stroke="%23333" stroke-width="2" fill="none"/><path d="M50 20 L50 80 M20 50 L80 50 M35 35 L65 65 M35 65 L65 35" stroke="%23333" stroke-width="2"/></svg>');
+}
+
+.card-front {
+    background-color: #211522;
+    border: 2px solid var(--glow-color);
+    transform: rotateY(180deg);
+    overflow: hidden;
+    box-shadow: 0 0 var(--glow-spread) var(--glow-color);
+}
+
+.card-symbol {
+    font-size: 2.5rem;
+    color: var(--glow-color);
+    text-shadow: 0 0 8px var(--glow-color);
+    transform: scale(0);
+    transition: transform 0.3s ease-out;
+}
+
+.card.flipped .card-symbol {
+    transform: scale(1);
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card.matched .card-front {
+    animation: matched-animation 1s forwards;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    margin-bottom: 20px;
+}
+
+.timer-container {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.candle {
+    position: relative;
+    width: 20px;
+    height: 120px;
+    background: linear-gradient(to bottom, #ffd280, #fff8e0);
+    border-radius: 2px;
+    margin-right: 10px;
+    box-shadow: 0 0 10px rgba(255, 200, 50, 0.5);
+}
+
+.candle-meter {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #222;
+    transition: height 1s linear;
+    border-radius: 2px;
+}
+
+.flame {
+    position: absolute;
+    top: -20px;
+    left: 5px;
+    width: 10px;
+    height: 20px;
+    background: radial-gradient(ellipse at bottom, #ffb800, transparent 80%);
+    border-radius: 50% 50% 20% 20%;
+    transform-origin: center bottom;
+    animation: flicker 0.5s infinite alternate;
+    box-shadow: 0 0 15px rgba(255, 200, 50, 0.8);
+}
+
+.low-time .flame {
+    animation: flicker-fast 0.2s infinite alternate;
+}
+
+.timer-display {
+    font-size: 1.5rem;
+    margin-left: 10px;
+    min-width: 80px;
+}
+
+.score {
+    font-size: 1.5rem;
+}
+
+.difficulty-menu {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.difficulty-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px var(--glow-color);
+}
+
+.btn {
+    font-family: 'Pirata One', cursive;
+    padding: 10px 20px;
+    margin: 5px;
+    border: 2px solid var(--glow-color);
+    background-color: #1a121f;
+    color: var(--text-color);
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px var(--glow-color);
+    text-shadow: 0 0 3px var(--glow-color);
+}
+
+.btn:hover {
+    background-color: #2d1e33;
+    box-shadow: 0 0 15px var(--glow-color);
+}
+
+.btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.game-over,
+.victory-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.game-over.active,
+.victory-screen.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-title {
+    font-family: 'UnifrakturMaguntia', cursive;
+    font-size: 3rem;
+    color: #ff5555;
+    text-shadow: 0 0 10px #ff0000;
+    margin-bottom: 20px;
+}
+
+.victory-title {
+    color: #ffcc00;
+    text-shadow: 0 0 10px #ffaa00;
+}
+
+.modal-text {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    max-width: 80%;
+}
+
+.high-scores {
+    margin-top: 20px;
+    background-color: rgba(30, 20, 40, 0.7);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--glow-color);
+    width: 80%;
+    max-width: 400px;
+}
+
+.high-scores h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: #ffcc00;
+}
+
+.scores-list {
+    list-style: none;
+}
+
+.scores-list li {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    padding: 5px;
+    border-bottom: 1px solid #333;
+}
+
+@keyframes flicker {
+    0% { transform: scaleY(1) scaleX(1); opacity: 0.9; }
+    100% { transform: scaleY(1.1) scaleX(0.9); opacity: 1; }
+}
+
+@keyframes flicker-fast {
+    0% { transform: scaleY(0.8) scaleX(1.2); opacity: 0.7; }
+    100% { transform: scaleY(1.2) scaleX(0.8); opacity: 1; }
+}
+
+@keyframes matched-animation {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.5; box-shadow: 0 0 30px gold; }
+    100% { transform: scale(0); opacity: 0; }
+}
+
+.candle-container {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+}
+
+.candle-light {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(255, 200, 50, 0.2), transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+}
+
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 2rem;
+    }
+    
+    .game-board {
+        grid-gap: 8px;
+    }
+    
+    .candle {
+        height: 80px;
+        width: 15px;
+    }
+    
+    .timer-display, .score {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .timer-container {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .card-symbol {
+        font-size: 1.8rem;
+    }
+}

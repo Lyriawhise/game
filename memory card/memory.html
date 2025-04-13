@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Ritual Memory Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="memory.css">
+</head>
+<body>
+    <div class="fog"></div>
+    
+    <h1 class="game-title">Dark Ritual Memory</h1>
+    
+    <div class="controls">
+        <div class="timer-container">
+            <div class="candle">
+                <div class="flame"></div>
+                <div class="candle-meter"></div>
+            </div>
+            <div class="timer-display">00:00</div>
+        </div>
+        <div class="score">Pairs: 0</div>
+    </div>
+    
+    <div class="game-container">
+        <div class="game-board"></div>
+    </div>
+    
+    <div class="difficulty-menu">
+        <div class="difficulty-title">Choose your ritual difficulty</div>
+        <div class="btn-group">
+            <button class="btn btn-difficulty" data-mode="easy">Easy</button>
+            <button class="btn btn-difficulty" data-mode="normal">Normal</button>
+            <button class="btn btn-difficulty" data-mode="hard">Hard</button>
+        </div>
+    </div>
+    
+    <div class="game-over">
+        <h2 class="modal-title">Ritual Failed</h2>
+        <p class="modal-text">The candle has burned out. The spirits have vanished into the darkness.</p>
+        <button class="btn btn-retry">Try Again</button>
+        <div class="high-scores">
+            <h3>High Scores</h3>
+            <ul class="scores-list"></ul>
+        </div>
+    </div>
+    
+    <div class="victory-screen">
+        <h2 class="modal-title victory-title">Ritual Complete</h2>
+        <p class="modal-text">You have successfully matched all the ancient runes and completed the ritual.</p>
+        <button class="btn btn-play-again">New Ritual</button>
+        <div class="high-scores">
+            <h3>High Scores</h3>
+            <ul class="scores-list"></ul>
+        </div>
+    </div>
+
+    <script src="memory.js"></script>
+</body>
+</html> 
